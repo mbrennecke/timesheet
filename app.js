@@ -1,5 +1,18 @@
 $(document).ready(function(){
 
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDTGzlg7HZGd7clegIYeCMicx5SGQlyqmk",
+    authDomain: "timesheet-df431.firebaseapp.com",
+    databaseURL: "https://timesheet-df431.firebaseio.com",
+    projectId: "timesheet-df431",
+    storageBucket: "timesheet-df431.appspot.com",
+    messagingSenderId: "838836693904"
+  };
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
 $("#submit").on("click", function(event) {
     event.preventDefault();
 
@@ -9,6 +22,14 @@ $("#submit").on("click", function(event) {
     var rate = $("#rate").val();
     var months = "";
     var billed = "";
+
+    database.ref().push({
+        name: name,
+        role: role,
+        startDate: date,
+        rate: rate,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP,
+    });
 
     var newRow = "<tr><td>" + name + "</td><td>" + role + "</td><td>" + date + "</td><td>" + months + "</td><td>" + rate + "</td><td>" + billed + "</td></tr>";
 
