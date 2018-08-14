@@ -31,16 +31,13 @@ $("#submitBtn").on("click", function(event) {
         dateAdded: firebase.database.ServerValue.TIMESTAMP,
     });
 
-    var newRow = "<tr><td>" + name + "</td><td>" + role + "</td><td>" + date + "</td><td>" + months + "</td><td>" + rate + "</td><td>" + billed + "</td></tr>";
-
-    $("#current").append(newRow);
 })
 
-database.ref().on("child_added", function(){
-    $("#current").empty();
-    for (vari = 0; i < database.numChildren(); i++) {
-        
-    }
+database.ref().on("child_added", function(childSnapshot){
+    
+    var newRow = "<tr><td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().role + "</td><td>" + childSnapshot.val().startDate + "</td><td>12</td><td>" + childSnapshot.val().rate + "</td><td>12</td></tr>";
+
+    $("#current").append(newRow);
 })
 
 
