@@ -13,7 +13,7 @@ var config = {
 
   var database = firebase.database();
 
-$("#submit").on("click", function(event) {
+$("#submitBtn").on("click", function(event) {
     event.preventDefault();
 
     var name = $("#name").val();
@@ -36,7 +36,12 @@ $("#submit").on("click", function(event) {
     $("#current").append(newRow);
 })
 
-
+database.ref().on("child_added", function(){
+    $("#current").empty();
+    for (vari = 0; i < database.numChildren(); i++) {
+        
+    }
+})
 
 
 
