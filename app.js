@@ -20,6 +20,7 @@ $("#submitBtn").on("click", function(event) {
     var role = $("#role").val();
     var date = $("#date").val();
     var rate = $("#rate").val();
+    console.log(rate);
     var months = "";
     var billed = "";
 
@@ -34,8 +35,13 @@ $("#submitBtn").on("click", function(event) {
 })
 
 database.ref().on("child_added", function(childSnapshot){
+
+    var months = moment().diff(childSnapshot.val().startDate, "months");
+    console.log(months, rate);
+    var billed = (parseInt(months) * parseInt(childSnapshot.val().rate)).toLocaleString('en');
+    console.log(billed);
     
-    var newRow = "<tr><td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().role + "</td><td>" + childSnapshot.val().startDate + "</td><td>12</td><td>" + childSnapshot.val().rate + "</td><td>12</td></tr>";
+    var newRow = "<tr><td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().role + "</td><td>" + moment(childSnapshot.val().startDate).format("MM/DD/YYYY") + "</td><td>" + months + "</td><td>" + (childSnapshot.val().rate).toLocaleString('en') + "</td><td>" + billed + "</td></tr>";
 
     $("#current").append(newRow);
 })
